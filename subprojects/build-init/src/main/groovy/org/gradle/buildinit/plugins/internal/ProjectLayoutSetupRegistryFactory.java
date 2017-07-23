@@ -36,6 +36,7 @@ public class ProjectLayoutSetupRegistryFactory {
         registry.add(BuildInitTypeIds.GROOVY_LIBRARY, new GroovyLibraryProjectInitDescriptor(templateOperationBuilder, fileResolver, libraryVersionProvider, settingsDescriptor, documentationRegistry));
         registry.add(BuildInitTypeIds.BASIC, new BasicTemplateBasedProjectInitDescriptor(templateOperationBuilder, libraryVersionProvider, settingsDescriptor));
         registry.add(BuildInitTypeIds.POM, new PomProjectInitDescriptor(fileResolver, mavenSettingsProvider));
+        registry.add(BuildInitTypeIds.GRADLE_PLUGIN, new GradlePluginProjectInitDescriptor(templateOperationBuilder, fileResolver, libraryVersionProvider, settingsDescriptor, documentationRegistry));
         return registry;
     }
 

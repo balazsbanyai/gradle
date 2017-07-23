@@ -73,6 +73,26 @@ class LanguageLibraryProjectInitDescriptorSpec extends Specification {
         false         |    false      |  0
     }
 
+    def "handles directories recursively"() {
+
+        setup:
+        descriptor = new TestLanguageLibraryProjectInitDescriptor(language, templateOperationFactory, fileResolver, libraryVersionProvider, globalSettingsDescriptor)
+        1 * templateOperationFactory.newTemplateOperation() >> templateOperationBuilder
+
+        when:
+        descriptor.fromClazzTemplate("somedir/a/b/C.java.template", "main");//, "java", target)
+
+        then:
+        1 * templateOperationBuilder.withTemplate("somedir/a/b/C.java.template") >> templateOperationBuilder
+        1 * templateOperationBuilder.withTarget(target) >> templateOperationBuilder
+        1 * templateOperationBuilder.create() >> Mock(TemplateOperation)
+
+        where:
+        language        |  sourceSet       |   target
+        "java"          |  "main"          |   "src/main/java/a/b/C.java"
+
+    }
+
     class TestLanguageLibraryProjectInitDescriptor extends LanguageLibraryProjectInitDescriptor {
 
         TestLanguageLibraryProjectInitDescriptor(String language, TemplateOperationFactory templateOperationFactory, FileResolver fileResolver,
